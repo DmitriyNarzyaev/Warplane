@@ -4,8 +4,8 @@ import Button from "./Button";
 
 
 export default class Main_Container extends Container {
-	public static readonly WINDOW_WIDTH:number = 1120;
-	public static readonly WINDOW_HEIGHT:number = 1120;
+	public static readonly WINDOW_WIDTH:number = 1920;
+	public static readonly WINDOW_HEIGHT:number = 1080;
 	private _startMenuContainer:PIXI.Container;
 	private _startMenu:Start_Menu;
 	private _button:Button;
@@ -22,6 +22,8 @@ export default class Main_Container extends Container {
 		const picLoader:PIXI.Loader = new PIXI.Loader();
 		picLoader
 			.add("title", "title.jpg")
+			.add("player", "player.png")
+			.add("score-menu", "score-menu.png")
 
 		picLoader.load(()=> {
 			this.initialStartMenu("START");
