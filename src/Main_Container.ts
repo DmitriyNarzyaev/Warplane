@@ -1,6 +1,7 @@
 import Container = PIXI.Container;
 import Start_Menu from "./Start_Menu";
 import Button from "./Button";
+import Score_Menu from "./Score_Menu";
 
 
 export default class Main_Container extends Container {
@@ -9,6 +10,7 @@ export default class Main_Container extends Container {
 	private _startMenuContainer:PIXI.Container;
 	private _startMenu:Start_Menu;
 	private _button:Button;
+	private _scoreMenu:Score_Menu;
 
 	constructor() {
 		super();
@@ -41,6 +43,7 @@ export default class Main_Container extends Container {
 	}
 
 	private startProject():void {
+		this.removeChild(this._startMenuContainer);
 		this.initialBackground();
 	}
 
@@ -50,5 +53,14 @@ export default class Main_Container extends Container {
 		background.drawRect(0, 0, Main_Container.WINDOW_WIDTH, Main_Container.WINDOW_HEIGHT);
 		background.interactive = true;
 		this.addChild(background);
+
+		this.initialScoreMenu();
+	}
+
+	private initialScoreMenu():void {
+		this._scoreMenu = new Score_Menu();
+		this._scoreMenu.x = 20;
+		this._scoreMenu.y = 10;
+		this.addChild(this._scoreMenu);
 	}
 }
