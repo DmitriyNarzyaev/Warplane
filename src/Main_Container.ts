@@ -2,15 +2,17 @@ import Container = PIXI.Container;
 import Start_Menu from "./Start_Menu";
 import Button from "./Button";
 import Score_Menu from "./Score_Menu";
+import Player from "./Player";
 
 
 export default class Main_Container extends Container {
 	public static readonly WINDOW_WIDTH:number = 1920;
 	public static readonly WINDOW_HEIGHT:number = 1080;
-	private _startMenuContainer:PIXI.Container;
+	private readonly _startMenuContainer:PIXI.Container;
 	private _startMenu:Start_Menu;
 	private _button:Button;
 	private _scoreMenu:Score_Menu;
+	private _player:Player
 
 	constructor() {
 		super();
@@ -55,6 +57,7 @@ export default class Main_Container extends Container {
 		this.addChild(background);
 
 		this.initialScoreMenu();
+		this.initialPlayer();
 	}
 
 	private initialScoreMenu():void {
@@ -63,4 +66,11 @@ export default class Main_Container extends Container {
 		this._scoreMenu.y = 10;
 		this.addChild(this._scoreMenu);
 	}
+
+    private initialPlayer():void {
+        this._player = new Player();
+        this._player.x = (Main_Container.WINDOW_WIDTH - this._player.width)/2;
+        this._player.y = Main_Container.WINDOW_HEIGHT / 1.2;
+        this.addChild(this._player);
+    }
 }

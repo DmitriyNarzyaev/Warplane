@@ -1,8 +1,8 @@
-import {Sprite, TextStyle} from "pixi.js";
+import { Sprite, TextStyle } from "pixi.js";
 import Container = PIXI.Container;
 
 export default class Score_Menu extends Container {
-    public _background: PIXI.Sprite;
+    private _background: PIXI.Sprite;
     private _textStyle:TextStyle = new PIXI.TextStyle ({
         fontFamily: 'Arial',
         fontSize: 20,
