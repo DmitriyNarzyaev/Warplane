@@ -3,6 +3,8 @@ import Start_Menu from "./Start_Menu";
 import Button from "./Button";
 import Score_Menu from "./Score_Menu";
 import Player from "./Player";
+import Key_Handler from "./Key_Handler";
+import {Main} from "./Main";
 
 
 export default class Main_Container extends Container {
@@ -47,6 +49,16 @@ export default class Main_Container extends Container {
 	private startProject():void {
 		this.removeChild(this._startMenuContainer);
 		this.initialBackground();
+
+		window.addEventListener("keydown",
+			(e:KeyboardEvent) => {
+				Key_Handler.keyDownHandler(e);
+			},);
+		window.addEventListener("keyup",
+			(e:KeyboardEvent) => {
+				Key_Handler.keyUpHandler(e);
+			},);
+		Main.pixiApp.ticker.add(this.ticker, this);
 	}
 
 	private initialBackground():void {
@@ -73,4 +85,33 @@ export default class Main_Container extends Container {
         this._player.y = Main_Container.WINDOW_HEIGHT / 1.2;
         this.addChild(this._player);
     }
+
+
+	private ticker():void {
+		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false) {
+			this.leftMove();
+		}else if (Key_Handler.BUTTON_UP == true && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false) {
+			this.upMove();
+		}else if (Key_Handler.BUTTON_RIGHT == true && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false) {
+			this.rightMove();
+		}else if (Key_Handler.BUTTON_DOWN == true && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false) {
+			this.downMove();
+		}
+	}
+
+	private leftMove():void{
+		this._player.x -= this._player._playerSpeed;
+	}
+
+	private upMove():void{
+		this._player.y -= this._player._playerSpeed;
+	}
+
+	private rightMove():void{
+		this._player.x += this._player._playerSpeed;
+	}
+
+	private downMove():void{
+		this._player.y += this._player._playerSpeed;
+	}
 }
