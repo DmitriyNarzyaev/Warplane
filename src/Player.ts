@@ -3,7 +3,7 @@ import Container = PIXI.Container;
 
 export default class Player extends Container {
     private _player: PIXI.Sprite;
-    public _playerSpeed:number = 1;
+    public _playerSpeed:number = 3;
 
     constructor() {
         super();

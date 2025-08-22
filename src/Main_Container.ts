@@ -89,29 +89,62 @@ export default class Main_Container extends Container {
 
 	private ticker():void {
 		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false) {
-			this.leftMove();
+			this.leftMove(false);
 		}else if (Key_Handler.BUTTON_UP == true && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false) {
-			this.upMove();
+			this.upMove(false);
 		}else if (Key_Handler.BUTTON_RIGHT == true && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false) {
-			this.rightMove();
+			this.rightMove(false);
 		}else if (Key_Handler.BUTTON_DOWN == true && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false) {
-			this.downMove();
+			this.downMove(false);
+		}
+
+		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == true && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false) {
+			this.upMove(true);
+			this.leftMove(true);
+		}
+		if (Key_Handler.BUTTON_UP == true && Key_Handler.BUTTON_RIGHT == true && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false) {
+			this.upMove(true);
+			this.rightMove(true);
+		}
+		if (Key_Handler.BUTTON_DOWN == true && Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false) {
+			this.downMove(true);
+			this.leftMove(true);
+		}
+		if (Key_Handler.BUTTON_RIGHT == true && Key_Handler.BUTTON_DOWN == true && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false) {
+			this.downMove(true);
+			this.rightMove(true);
 		}
 	}
 
-	private leftMove():void{
-		this._player.x -= this._player._playerSpeed;
+	private leftMove(diag:boolean):void{
+		if (diag) {
+			this._player.x -= this._player._playerSpeed / Math.sqrt(2);
+		} else {
+			this._player.x -= this._player._playerSpeed;
+		}
 	}
 
-	private upMove():void{
-		this._player.y -= this._player._playerSpeed;
+	private upMove(diag:boolean):void{
+		if (diag) {
+			this._player.y -= this._player._playerSpeed / Math.sqrt(2);
+		} else {
+			this._player.y -= this._player._playerSpeed;
+		}
 	}
 
-	private rightMove():void{
-		this._player.x += this._player._playerSpeed;
+	private rightMove(diag:boolean):void{
+		if (diag) {
+			this._player.x += this._player._playerSpeed / Math.sqrt(2);
+		} else {
+			this._player.x += this._player._playerSpeed;
+		}
 	}
 
-	private downMove():void{
-		this._player.y += this._player._playerSpeed;
+	private downMove(diag:boolean):void{
+		if (diag) {
+			this._player.y += this._player._playerSpeed / Math.sqrt(2);
+		} else {
+			this._player.y += this._player._playerSpeed;
+		}
 	}
 }

@@ -1,4 +1,3 @@
-import { } from "pixi.js";
 import Container = PIXI.Container;
 
 export default class Key_Handler extends Container {
