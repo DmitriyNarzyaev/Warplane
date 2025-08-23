@@ -57,6 +57,7 @@ export default class Main_Container extends Container {
 		window.addEventListener("keyup",
 			(e:KeyboardEvent) => {
 				Key_Handler.keyUpHandler(e);
+				Player.straightMove();
 			},);
 		Main.pixiApp.ticker.add(this.ticker, this);
 	}
@@ -85,7 +86,6 @@ export default class Main_Container extends Container {
         this._player.y = Main_Container.WINDOW_HEIGHT / 1.4;
         this.addChild(this._player);
     }
-
 
 	private ticker():void {
 		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false) {
@@ -122,6 +122,8 @@ export default class Main_Container extends Container {
 		} else {
 			this._player.x -= this._player._playerSpeed;
 		}
+
+		Player.leftMove();
 	}
 
 	private upMove(diag:boolean):void{
@@ -138,6 +140,8 @@ export default class Main_Container extends Container {
 		} else {
 			this._player.x += this._player._playerSpeed;
 		}
+
+		Player.rightMove();
 	}
 
 	private downMove(diag:boolean):void{
