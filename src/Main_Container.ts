@@ -82,7 +82,7 @@ export default class Main_Container extends Container {
     private initialPlayer():void {
         this._player = new Player();
         this._player.x = (Main_Container.WINDOW_WIDTH - this._player.width)/2;
-        this._player.y = Main_Container.WINDOW_HEIGHT / 1.2;
+        this._player.y = Main_Container.WINDOW_HEIGHT / 1.4;
         this.addChild(this._player);
     }
 
