@@ -32,8 +32,18 @@ export default class Main_Container extends Container {
 			.add("score-menu", "score-menu.png")
 
 		picLoader.load(()=> {
-			this.initialStartMenu("START");
+			this.jsonLoader();
 		});
+	}
+
+	private jsonLoader():void {
+		const jsonLoader:XMLHttpRequest = new XMLHttpRequest();
+		jsonLoader.responseType = "json";
+		jsonLoader.open("GET", "level1.json", true);
+		jsonLoader.onreadystatechange = () => {
+			this.initialStartMenu("START");
+		};
+		jsonLoader.send();
 	}
 
 	private initialStartMenu(buttonName:string):void {
@@ -114,7 +124,6 @@ export default class Main_Container extends Container {
 			this.downMove(true);
 			this.rightMove(true);
 		}
-
 		Player._propeller.alpha = Math.random();
 	}
 
@@ -124,7 +133,6 @@ export default class Main_Container extends Container {
 		} else {
 			this._player.x -= this._player._playerSpeed;
 		}
-
 		Player.leftMove();
 	}
 
@@ -142,7 +150,6 @@ export default class Main_Container extends Container {
 		} else {
 			this._player.x += this._player._playerSpeed;
 		}
-
 		Player.rightMove();
 	}
 

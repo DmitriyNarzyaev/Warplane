@@ -6,7 +6,7 @@ export default class Player extends Container {
     private static _playerTexture:any;
     public static _propeller: PIXI.Sprite;
     public static _propellerTexture:any;
-    public _playerSpeed:number = 3;
+    public _playerSpeed:number = 5;
 
     constructor() {
         super();

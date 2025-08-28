@@ -1,0 +1,17 @@
+{
+	"items":[
+		{
+			"type":"plane",
+			"x":960,
+			"time":180
+		}, {
+			"type":"rocket",
+			"x":480,
+			"time":240
+		}, {
+			"type":"ship",
+			"x":1440,
+			"time":300
+		}
+	]
+}
