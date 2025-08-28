@@ -3,18 +3,23 @@ import Start_Menu from "./Start_Menu";
 import Button from "./Button";
 import Score_Menu from "./Score_Menu";
 import Player from "./Player";
+import Enemy from "./Enemy";
 import Key_Handler from "./Key_Handler";
 import {Main} from "./Main";
-
+import {Sprite} from "pixi.js";
 
 export default class Main_Container extends Container {
 	public static readonly WINDOW_WIDTH:number = 1920;
 	public static readonly WINDOW_HEIGHT:number = 1080;
+	public static jsonLoader:XMLHttpRequest;
+	public static _enemyArray:Sprite[] = [];
 	private readonly _startMenuContainer:PIXI.Container;
 	private _startMenu:Start_Menu;
 	private _button:Button;
 	private _scoreMenu:Score_Menu;
 	private _player:Player
+	private _frameIterator:number = 0;
+	private _level:ILevel;
 
 	constructor() {
 		super();
@@ -37,13 +42,14 @@ export default class Main_Container extends Container {
 	}
 
 	private jsonLoader():void {
-		const jsonLoader:XMLHttpRequest = new XMLHttpRequest();
-		jsonLoader.responseType = "json";
-		jsonLoader.open("GET", "level1.json", true);
-		jsonLoader.onreadystatechange = () => {
+		Main_Container.jsonLoader = new XMLHttpRequest();
+		Main_Container.jsonLoader.responseType = "json";
+
+		Main_Container.jsonLoader.open("GET", "level1.json", true);
+		Main_Container.jsonLoader.onreadystatechange = () => {
 			this.initialStartMenu("START");
 		};
-		jsonLoader.send();
+		Main_Container.jsonLoader.send();
 	}
 
 	private initialStartMenu(buttonName:string):void {
@@ -57,8 +63,11 @@ export default class Main_Container extends Container {
 	}
 
 	private startProject():void {
+		this._level = Main_Container.jsonLoader.response;
 		this.removeChild(this._startMenuContainer);
 		this.initialBackground();
+		this.initialScoreMenu();
+		this.initialPlayer();
 
 		window.addEventListener("keydown",
 			(e:KeyboardEvent) => {
@@ -70,6 +79,15 @@ export default class Main_Container extends Container {
 				Player.straightMove();
 			},);
 		Main.pixiApp.ticker.add(this.ticker, this);
+
+
+
+		// this.initialEnemy(
+		// 	this._level.items[0].x,
+		// 	this._level.items[0].y,
+		// 	this._level.items[0].width,
+		// 	this._level.items[0].height
+		// );
 	}
 
 	private initialBackground():void {
@@ -78,9 +96,6 @@ export default class Main_Container extends Container {
 		background.drawRect(0, 0, Main_Container.WINDOW_WIDTH, Main_Container.WINDOW_HEIGHT);
 		background.interactive = true;
 		this.addChild(background);
-
-		this.initialScoreMenu();
-		this.initialPlayer();
 	}
 
 	private initialScoreMenu():void {
@@ -96,6 +111,13 @@ export default class Main_Container extends Container {
         this._player.y = Main_Container.WINDOW_HEIGHT / 1.4;
         this.addChild(this._player);
     }
+
+	private initialEnemy(mapX:number, mapY:number, MapWidth:number, mapHeight:number):void {
+		let enemy:Enemy = new Enemy(mapX, mapY, MapWidth, mapHeight);
+		enemy.x = 100;
+		enemy.y = 100;
+		this.addChild(enemy);
+	}
 
 	private ticker():void {
 		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false) {
@@ -125,6 +147,19 @@ export default class Main_Container extends Container {
 			this.rightMove(true);
 		}
 		Player._propeller.alpha = Math.random();
+
+		this._frameIterator ++;
+
+		this._level.items.forEach((enemy)=> {
+			if (this._frameIterator == enemy.time) {
+				this.initialEnemy(
+					enemy.mapX,
+					enemy.mapY,
+					enemy.mapWidth,
+					enemy.mapHeight,
+				);
+			}
+		});
 	}
 
 	private leftMove(diag:boolean):void{

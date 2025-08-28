@@ -2,16 +2,20 @@
 	"items":[
 		{
 			"type":"plane",
-			"x":960,
-			"time":180
+			"mapX":0,
+			"mapY":251,
+			"mapWidth": 220,
+			"mapHeight": 200,
+			"time":30,
+			"speed":5
 		}, {
 			"type":"rocket",
-			"x":480,
-			"time":240
-		}, {
-			"type":"ship",
-			"x":1440,
-			"time":300
+			"mapX":221,
+			"mapY":251,
+			"mapWidth": 30,
+			"mapHeight": 62,
+			"time":60,
+			"speed":8
 		}
 	]
 }
