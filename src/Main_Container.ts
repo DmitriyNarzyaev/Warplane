@@ -5,8 +5,8 @@ import Score_Menu from "./Score_Menu";
 import Player from "./Player";
 import Enemy from "./Enemy";
 import Key_Handler from "./Key_Handler";
-import {Main} from "./Main";
 import {Sprite} from "pixi.js";
+import Global from "./Global";
 
 export default class Main_Container extends Container {
 	public static readonly WINDOW_WIDTH:number = 1920;
@@ -78,7 +78,7 @@ export default class Main_Container extends Container {
 				Key_Handler.keyUpHandler(e);
 				Player.straightMove();
 			},);
-		Main.pixiApp.ticker.add(this.ticker, this);
+		Global.PIXI_APP.ticker.add(this.ticker, this);
 	}
 
 	private initialBackground():void {
@@ -104,7 +104,7 @@ export default class Main_Container extends Container {
     }
 
 	private initialEnemy(mapX:number, mapY:number, MapWidth:number, mapHeight:number):void {
-		let enemy:Enemy = new Enemy(mapX, mapY, MapWidth, mapHeight);
+		let enemy:Enemy = new Enemy(mapX, mapY, MapWidth, mapHeight, Main_Container._enemyArray);
 		enemy.x = 100;
 		enemy.y = 100;
 		this.addChild(enemy);
