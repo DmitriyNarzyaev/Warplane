@@ -79,15 +79,6 @@ export default class Main_Container extends Container {
 				Player.straightMove();
 			},);
 		Main.pixiApp.ticker.add(this.ticker, this);
-
-
-
-		// this.initialEnemy(
-		// 	this._level.items[0].x,
-		// 	this._level.items[0].y,
-		// 	this._level.items[0].width,
-		// 	this._level.items[0].height
-		// );
 	}
 
 	private initialBackground():void {
@@ -158,6 +149,10 @@ export default class Main_Container extends Container {
 					enemy.mapWidth,
 					enemy.mapHeight,
 				);
+			}
+			for (let iterator:number = 0; iterator < Main_Container._enemyArray.length; iterator++) {
+				let enemy:Sprite = Main_Container._enemyArray[iterator];
+				enemy.y += this._level.items[iterator].speed;
 			}
 		});
 	}

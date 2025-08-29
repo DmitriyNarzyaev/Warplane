@@ -7,7 +7,6 @@ export default class Enemy extends Container {
 
     constructor(mapX:number, mapY:number, MapWidth:number, mapHeight:number) {
         super();
-
         this._enemyContainer = new PIXI.Container;
         this.addChild(this._enemyContainer);
         this.initialEnemy(mapX, mapY, MapWidth, mapHeight);
@@ -17,7 +16,6 @@ export default class Enemy extends Container {
         let enemyTexture = new PIXI.Texture(PIXI.utils.TextureCache["player"]);
         enemyTexture.frame = new PIXI.Rectangle(mapX, mapY, MapWidth, mapHeight);
         this._enemy = new PIXI.Sprite(enemyTexture);
-
         this._enemy.anchor.set(0.5);
         this._enemy.x = 0;
         this._enemy.y = 0;

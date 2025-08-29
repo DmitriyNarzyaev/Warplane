@@ -7,7 +7,7 @@
 			"mapWidth": 220,
 			"mapHeight": 200,
 			"time":30,
-			"speed":5
+			"speed":2
 		}, {
 			"type":"rocket",
 			"mapX":221,
@@ -15,7 +15,7 @@
 			"mapWidth": 30,
 			"mapHeight": 62,
 			"time":60,
-			"speed":8
+			"speed":5
 		}
 	]
 }

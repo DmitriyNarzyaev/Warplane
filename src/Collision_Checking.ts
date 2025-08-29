@@ -1,4 +1,4 @@
-import { Container, IPoint, Point } from "pixi.js";
+import { Container} from "pixi.js";
 
 export default class Collision_Checking {
 
