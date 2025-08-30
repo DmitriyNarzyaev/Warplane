@@ -1,21 +1,41 @@
 {
 	"items":[
 		{
-			"type":"plane",
-			"mapX":0,
-			"mapY":251,
-			"mapWidth": 220,
-			"mapHeight": 200,
-			"time":30,
-			"speed":2
-		}, {
 			"type":"rocket",
 			"mapX":221,
 			"mapY":251,
 			"mapWidth": 30,
 			"mapHeight": 62,
 			"time":60,
-			"speed":5
+			"speed":3,
+			"appearanceX": 960
+		}, {
+			"type":"rocket",
+			"mapX":221,
+			"mapY":251,
+			"mapWidth": 30,
+			"mapHeight": 62,
+			"time":70,
+			"speed":3,
+			"appearanceX": 900
+		}, {
+			"type":"rocket",
+			"mapX":221,
+			"mapY":251,
+			"mapWidth": 30,
+			"mapHeight": 62,
+			"time":80,
+			"speed":3,
+			"appearanceX": 1020
+		}, {
+			"type":"plane",
+			"mapX":0,
+			"mapY":251,
+			"mapWidth": 220,
+			"mapHeight": 200,
+			"time":120,
+			"speed":0.5,
+			"appearanceX": 960
 		}
 	]
 }

@@ -6,4 +6,5 @@ interface IEnemy {
     mapHeight:number;
     time:number;
     speed:number;
+    appearanceX:number
 }

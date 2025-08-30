@@ -5,7 +5,6 @@ import Score_Menu from "./Score_Menu";
 import Player from "./Player";
 import Enemy from "./Enemy";
 import Key_Handler from "./Key_Handler";
-import {Sprite} from "pixi.js";
 import Global from "./Global";
 
 export default class Main_Container extends Container {
@@ -13,6 +12,7 @@ export default class Main_Container extends Container {
 	public static readonly WINDOW_HEIGHT:number = 1080;
 	public static jsonLoader:XMLHttpRequest;
 	private _enemyArray:Enemy[] = [];
+	private _enemyContainer:PIXI.Container;
 	private readonly _startMenuContainer:PIXI.Container;
 	private _startMenu:Start_Menu;
 	private _button:Button;
@@ -23,10 +23,12 @@ export default class Main_Container extends Container {
 
 	constructor() {
 		super();
-		this.pictureLoader();
-
 		this._startMenuContainer = new PIXI.Container;
 		this.addChild(this._startMenuContainer);
+
+		this.pictureLoader();
+
+
 	}
 
 	private pictureLoader():void {
@@ -68,6 +70,8 @@ export default class Main_Container extends Container {
 		this.initialBackground();
 		this.initialScoreMenu();
 		this.initialPlayer();
+		this._enemyContainer = new PIXI.Container;
+		this.addChild(this._enemyContainer);
 
 		window.addEventListener("keydown",
 			(e:KeyboardEvent) => {
@@ -103,12 +107,13 @@ export default class Main_Container extends Container {
         this.addChild(this._player);
     }
 
-	private initialEnemy(mapX:number, mapY:number, MapWidth:number, mapHeight:number):void {
+	private initialEnemy(mapX:number, mapY:number, MapWidth:number, mapHeight:number, appearanceX:number):void {
 		let enemy:Enemy = new Enemy(mapX, mapY, MapWidth, mapHeight);
-		enemy.x = 100;
+		enemy.x = appearanceX;
 		enemy.y -= enemy.height;
-		this.addChild(enemy);
+		this._enemyContainer.addChild(enemy);
 		this._enemyArray.push(enemy);
+		console.log("000")
 	}
 
 	private ticker():void {
@@ -149,12 +154,21 @@ export default class Main_Container extends Container {
 					enemy.mapY,
 					enemy.mapWidth,
 					enemy.mapHeight,
+					enemy.appearanceX,
 				);
 			}
+
 			for (let iterator:number = 0; iterator < this._enemyArray.length; iterator++) {
 				let arrayEnemy:Enemy = this._enemyArray[iterator];
 				arrayEnemy.y += this._level.items[iterator].speed;
 				arrayEnemy.x += arrayEnemy.directionOfFlight;
+			}
+		});
+
+		this._enemyArray.forEach((enemy)=> {
+			if (enemy.y >= Main_Container.WINDOW_HEIGHT/2) {
+				//this._enemyArray.splice(this._enemyArray.indexOf(enemy));										//FIXME
+				this._enemyContainer.removeChild(enemy);
 			}
 		});
 	}
