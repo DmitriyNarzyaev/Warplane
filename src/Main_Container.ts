@@ -12,7 +12,7 @@ export default class Main_Container extends Container {
 	public static readonly WINDOW_WIDTH:number = 1920;
 	public static readonly WINDOW_HEIGHT:number = 1080;
 	public static jsonLoader:XMLHttpRequest;
-	public static _enemyArray:Sprite[] = [];
+	private _enemyArray:Enemy[] = [];
 	private readonly _startMenuContainer:PIXI.Container;
 	private _startMenu:Start_Menu;
 	private _button:Button;
@@ -104,10 +104,11 @@ export default class Main_Container extends Container {
     }
 
 	private initialEnemy(mapX:number, mapY:number, MapWidth:number, mapHeight:number):void {
-		let enemy:Enemy = new Enemy(mapX, mapY, MapWidth, mapHeight, Main_Container._enemyArray);
+		let enemy:Enemy = new Enemy(mapX, mapY, MapWidth, mapHeight);
 		enemy.x = 100;
-		enemy.y = 100;
+		enemy.y -= enemy.height;
 		this.addChild(enemy);
+		this._enemyArray.push(enemy);
 	}
 
 	private ticker():void {
@@ -150,9 +151,10 @@ export default class Main_Container extends Container {
 					enemy.mapHeight,
 				);
 			}
-			for (let iterator:number = 0; iterator < Main_Container._enemyArray.length; iterator++) {
-				let enemy:Sprite = Main_Container._enemyArray[iterator];
-				enemy.y += this._level.items[iterator].speed;
+			for (let iterator:number = 0; iterator < this._enemyArray.length; iterator++) {
+				let arrayEnemy:Enemy = this._enemyArray[iterator];
+				arrayEnemy.y += this._level.items[iterator].speed;
+				arrayEnemy.x += arrayEnemy.directionOfFlight;
 			}
 		});
 	}

@@ -1,11 +1,11 @@
 import Container = PIXI.Container;
-import {Sprite} from "pixi.js";
 
 export default class Enemy extends Container {
     public _anchorContainer:PIXI.Container;
     private readonly _enemy: PIXI.Sprite;
+    public directionOfFlight:number = -.5 + Math.random();
 
-    constructor(mapX:number, mapY:number, MapWidth:number, mapHeight:number, enemyArray:Sprite[]) {
+    constructor(mapX:number, mapY:number, MapWidth:number, mapHeight:number) {
         super();
 
         this._anchorContainer = new PIXI.Container;
@@ -18,7 +18,6 @@ export default class Enemy extends Container {
         this._enemy.x = 0;
         this._enemy.y = 0;
         this._anchorContainer.addChild(this._enemy);
-        enemyArray.push(this._enemy);
         this._anchorContainer.x = this._enemy.width/2;
         this._anchorContainer.y = this._enemy.height/2;
     }
