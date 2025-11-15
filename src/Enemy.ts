@@ -3,7 +3,7 @@ import Container = PIXI.Container;
 export default class Enemy extends Container {
     public _anchorContainer:PIXI.Container;
     private readonly _enemy: PIXI.Sprite;
-    public directionOfFlight:number = -.5 + Math.random();
+    public directionOfFlight:number = -.25 + (Math.random()/2);
 
     constructor(mapX:number, mapY:number, MapWidth:number, mapHeight:number) {
         super();
