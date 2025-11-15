@@ -25,10 +25,7 @@ export default class Main_Container extends Container {
 		super();
 		this._startMenuContainer = new PIXI.Container;
 		this.addChild(this._startMenuContainer);
-
 		this.pictureLoader();
-
-
 	}
 
 	private pictureLoader():void {
@@ -166,8 +163,7 @@ export default class Main_Container extends Container {
 		});
 
 		this._enemyArray.forEach((enemy)=> {
-			if (enemy.y >= Main_Container.WINDOW_HEIGHT/2) {
-				//this._enemyArray.splice(this._enemyArray.indexOf(enemy));										//FIXME
+			if (enemy.y >= Main_Container.WINDOW_HEIGHT-enemy.height/3) {								//удаление enemy
 				this._enemyContainer.removeChild(enemy);
 			}
 		});

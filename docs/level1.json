@@ -34,7 +34,7 @@
 			"mapWidth": 220,
 			"mapHeight": 200,
 			"time":120,
-			"speed":0.5,
+			"speed":0.8,
 			"appearanceX": 960
 		}
 	]
