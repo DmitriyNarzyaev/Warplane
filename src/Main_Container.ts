@@ -6,6 +6,7 @@ import Player from "./Player";
 import Enemy from "./Enemy";
 import Key_Handler from "./Key_Handler";
 import Global from "./Global";
+import Collision_Checking from "./Collision_Checking";
 
 export default class Main_Container extends Container {
 	public static readonly WINDOW_WIDTH:number = 1920;
@@ -165,6 +166,13 @@ export default class Main_Container extends Container {
 		this._enemyArray.forEach((enemy)=> {
 			if (enemy.y >= Main_Container.WINDOW_HEIGHT-enemy.height/3) {								//удаление enemy
 				this._enemyContainer.removeChild(enemy);
+			}
+
+			if (
+				Collision_Checking.horizontal(this._player, enemy) &&
+				Collision_Checking.vertical(this._player, enemy)
+			){
+				console.log("collision")
 			}
 		});
 	}
