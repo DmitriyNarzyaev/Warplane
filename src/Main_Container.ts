@@ -21,6 +21,7 @@ export default class Main_Container extends Container {
 	private _player:Player
 	private _frameIterator:number = 0;
 	private _level:ILevel;
+	private _background:PIXI.Graphics
 
 	constructor() {
 		super();
@@ -65,6 +66,10 @@ export default class Main_Container extends Container {
 	private startProject():void {
 		this._level = Main_Container.jsonLoader.response;
 		this.removeChild(this._startMenuContainer);
+		this.startAll();
+	}
+
+	private startAll():void {
 		this.initialBackground();
 		this.initialScoreMenu();
 		this.initialPlayer();
@@ -83,12 +88,33 @@ export default class Main_Container extends Container {
 		Global.PIXI_APP.ticker.add(this.ticker, this);
 	}
 
+	private removeProject():void {
+		this.removeChild(this._player);
+		this.removeChild(this._enemyContainer);
+		this._enemyArray = [];
+		this.removeChild(this._background);
+		this._background = null;
+		this.removeChild(this._scoreMenu);
+		this._scoreMenu = null;
+
+		window.removeEventListener("keydown",
+			(e:KeyboardEvent) => {
+				Key_Handler.keyDownHandler(e);
+			},);
+		window.removeEventListener("keyup",
+			(e:KeyboardEvent) => {
+				Key_Handler.keyUpHandler(e);
+				Player.straightMove();
+			},);
+		Global.PIXI_APP.ticker.remove(this.ticker, this);
+	}
+
 	private initialBackground():void {
-		let background:PIXI.Graphics = new PIXI.Graphics;
-		background.beginFill(0x42AAFF);
-		background.drawRect(0, 0, Main_Container.WINDOW_WIDTH, Main_Container.WINDOW_HEIGHT);
-		background.interactive = true;
-		this.addChild(background);
+		this._background = new PIXI.Graphics;
+		this._background.beginFill(0x42AAFF);
+		this._background.drawRect(0, 0, Main_Container.WINDOW_WIDTH, Main_Container.WINDOW_HEIGHT);
+		this._background.interactive = true;
+		this.addChild(this._background);
 	}
 
 	private initialScoreMenu():void {
@@ -172,7 +198,7 @@ export default class Main_Container extends Container {
 				Collision_Checking.horizontal(this._player, enemy) &&
 				Collision_Checking.vertical(this._player, enemy)
 			){
-				console.log("collision")
+				this.removeProject();
 			}
 		});
 	}
