@@ -3,6 +3,8 @@ import Container = PIXI.Container;
 
 export default class Score_Menu extends Container {
     private _background: PIXI.Sprite;
+    private _livesText:PIXI.Text;
+    private _scoreText:PIXI.Text;
     private _textStyle:TextStyle = new PIXI.TextStyle ({
         fontFamily: 'Arial',
         fontSize: 20,
@@ -11,11 +13,11 @@ export default class Score_Menu extends Container {
         lineHeight: 40,
     });
 
-    constructor() {
+    constructor(score:number) {
         super();
         this.initialBackground();
-        this.livesPointText();
-        this.scoreText();
+        this.livesPoint();
+        this.scorePoint(score);
     }
 
     private initialBackground():void {
@@ -25,23 +27,23 @@ export default class Score_Menu extends Container {
         this.addChild(this._background);
     }
 
-    private livesPointText():void {
-        const livesText:PIXI.Text = new PIXI.Text (
+    private livesPoint():void {
+        this._livesText = new PIXI.Text (
             "Warplane                             ♥ ♥ ♥ ♥ ♥",
             this._textStyle
         );
-        livesText.x = 15;
-        livesText.y = 6;
-        this.addChild(livesText);
+        this._livesText.x = 15;
+        this._livesText.y = 6;
+        this.addChild(this._livesText);
     }
 
-    private scoreText():void {
-        const scoreText:PIXI.Text = new PIXI.Text (
-            "Score: 0",
+    private scorePoint(score:number):void {
+        this._scoreText = new PIXI.Text (
+            "SCORE:  " + score as any as string,
             this._textStyle
         );
-        scoreText.x = 15;
-        scoreText.y = 48;
-        this.addChild(scoreText);
+        this._scoreText.x = 15;
+        this._scoreText.y = 48;
+        this.addChild(this._scoreText);
     }
 }

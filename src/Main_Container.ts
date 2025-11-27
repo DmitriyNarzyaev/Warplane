@@ -22,6 +22,8 @@ export default class Main_Container extends Container {
 	private _frameIterator:number = 0;
 	private _level:ILevel;
 	private _background:PIXI.Graphics
+	private _scoreIterator:number = 0;
+	private _score:number = 0;
 
 	constructor() {
 		super();
@@ -118,7 +120,7 @@ export default class Main_Container extends Container {
 	}
 
 	private initialScoreMenu():void {
-		this._scoreMenu = new Score_Menu();
+		this._scoreMenu = new Score_Menu(this._score);
 		this._scoreMenu.x = 20;
 		this._scoreMenu.y = 10;
 		this.addChild(this._scoreMenu);
@@ -205,6 +207,13 @@ export default class Main_Container extends Container {
 				this.removeProject();
 			}
 		});
+
+		this._scoreIterator += 1;
+		if (this._scoreIterator % 60 === 0) {
+			this._score += 1;
+			this.removeChild(this._scoreMenu);
+			this.initialScoreMenu();
+		}
 	}
 
 	private leftMove(diag:boolean):void{
