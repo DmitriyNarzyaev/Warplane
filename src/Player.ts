@@ -28,6 +28,11 @@ export default class Player extends Container {
         this._playerContainer.addChild(Player._player);
         this._playerContainer.x = Player._player.width/2;
         this._playerContainer.y = Player._player.height/2;
+
+        let hitbox:PIXI.Graphics = new PIXI.Graphics;
+        hitbox.beginFill(0x00ff00, .2)
+        hitbox.drawRect(-Player._player.width/2, -Player._player.height/2, Player._player.width, Player._player.height);
+        this._playerContainer.addChild(hitbox);
     }
 
     public static straightMove():void {
