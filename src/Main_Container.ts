@@ -14,7 +14,7 @@ export default class Main_Container extends Container {
 	public static jsonLoader:XMLHttpRequest;
 	private _enemyArray:Enemy[] = [];
 	private _enemyContainer:PIXI.Container;
-	private readonly _startMenuContainer:PIXI.Container;
+	private _startMenuContainer:PIXI.Container;
 	private _startMenu:Start_Menu;
 	private _button:Button;
 	private _scoreMenu:Score_Menu;
@@ -27,8 +27,6 @@ export default class Main_Container extends Container {
 
 	constructor() {
 		super();
-		this._startMenuContainer = new PIXI.Container;
-		this.addChild(this._startMenuContainer);
 		this.pictureLoader();
 	}
 
@@ -56,6 +54,10 @@ export default class Main_Container extends Container {
 	}
 
 	private initialStartMenu(buttonName:string):void {
+		console.log("start menu");
+
+		this._startMenuContainer = new PIXI.Container;
+		this.addChild(this._startMenuContainer);
 		this._startMenu = new Start_Menu();
 		this._startMenuContainer.addChild(this._startMenu);
 
@@ -205,6 +207,7 @@ export default class Main_Container extends Container {
 				Collision_Checking.vertical(this._player, enemy)
 			){
 				this.removeProject();
+				this.initialStartMenu("RESTART");
 			}
 		});
 
