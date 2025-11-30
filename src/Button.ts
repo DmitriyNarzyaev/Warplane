@@ -3,12 +3,14 @@ import Container = PIXI.Container;
 
 export default class Button extends Container {
     private readonly _callback:()=>void;
-    private _buttonWidth:number = 170;
+    private readonly _buttonWidth:number;
     private _buttonHeight:number = 60;
+    private buttonWidthModificator:number = 33;
 
     constructor(buttonName:string, callback:()=>void = null) {
         super();
         this._callback = callback;
+        this._buttonWidth = buttonName.length * this.buttonWidthModificator;
         this.initialButton(buttonName, callback);
     }
 
