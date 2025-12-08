@@ -7,6 +7,7 @@ import Enemy from "./Enemy";
 import Key_Handler from "./Key_Handler";
 import Global from "./Global";
 import Collision_Checking from "./Collision_Checking";
+import {Sprite} from "pixi.js";
 
 export default class Main_Container extends Container {
 	public static readonly WINDOW_WIDTH:number = 1920;
@@ -21,23 +22,25 @@ export default class Main_Container extends Container {
 	private _player:Player
 	private _frameIterator:number = 0;
 	private _level:ILevel;
-	private _background:PIXI.Graphics
+	private _background:PIXI.Sprite
 	private _scoreIterator:number = 0;
 	private _score:number = 0;
+	private pictureLoaderChecking:number = 0;
 
 	constructor() {
 		super();
 		this.pictureLoader();
 	}
-
+	private picLoader:PIXI.Loader
 	private pictureLoader():void {
-		const picLoader:PIXI.Loader = new PIXI.Loader();
-		picLoader
+		this.picLoader = new PIXI.Loader();
+		this.picLoader
 			.add("title", "title.jpg")
 			.add("player", "player.png")
 			.add("score-menu", "score-menu.png")
+			.add("backgroundImg", "bg.jpeg")
 
-		picLoader.load(()=> {
+		this.picLoader.load(()=> {
 			this.jsonLoader();
 		});
 	}
@@ -48,7 +51,11 @@ export default class Main_Container extends Container {
 
 		Main_Container.jsonLoader.open("GET", "level1.json", true);
 		Main_Container.jsonLoader.onreadystatechange = () => {
-			this.initialStartMenu("START");
+			this.pictureLoaderChecking++;
+			console.log(this.pictureLoaderChecking)
+			if (this.pictureLoaderChecking == 3) {
+				this.initialStartMenu("START");
+			}
 		};
 		Main_Container.jsonLoader.send();
 	}
@@ -114,10 +121,7 @@ export default class Main_Container extends Container {
 	}
 
 	private initialBackground():void {
-		this._background = new PIXI.Graphics;
-		this._background.beginFill(0x42AAFF);
-		this._background.drawRect(0, 0, Main_Container.WINDOW_WIDTH, Main_Container.WINDOW_HEIGHT);
-		this._background.interactive = true;
+		this._background = Sprite.from("backgroundImg");
 		this.addChild(this._background);
 	}
 
