@@ -7,31 +7,33 @@ import Enemy from "./Enemy";
 import Key_Handler from "./Key_Handler";
 import Global from "./Global";
 import Collision_Checking from "./Collision_Checking";
-import {Sprite} from "pixi.js";
+import NoiseFilter = PIXI.filters.NoiseFilter;
+import Background from "./Background";
 
 export default class Main_Container extends Container {
 	public static readonly WINDOW_WIDTH:number = 1920;
 	public static readonly WINDOW_HEIGHT:number = 1080;
-	public static jsonLoader:XMLHttpRequest;
+	public static JSON_LOADER:XMLHttpRequest;
 	private _enemyArray:Enemy[] = [];
 	private _enemyContainer:PIXI.Container;
 	private _startMenuContainer:PIXI.Container;
 	private _startMenu:Start_Menu;
 	private _button:Button;
+	private _background:Background;
 	private _scoreMenu:Score_Menu;
 	private _player:Player
 	private _frameIterator:number = 0;
 	private _level:ILevel;
-	private _background:PIXI.Sprite
 	private _scoreIterator:number = 0;
 	private _score:number = 0;
 	private pictureLoaderChecking:number = 0;
+	private picLoader:PIXI.Loader
 
 	constructor() {
 		super();
 		this.pictureLoader();
 	}
-	private picLoader:PIXI.Loader
+
 	private pictureLoader():void {
 		this.picLoader = new PIXI.Loader();
 		this.picLoader
@@ -46,18 +48,18 @@ export default class Main_Container extends Container {
 	}
 
 	private jsonLoader():void {
-		Main_Container.jsonLoader = new XMLHttpRequest();
-		Main_Container.jsonLoader.responseType = "json";
+		Main_Container.JSON_LOADER = new XMLHttpRequest();
+		Main_Container.JSON_LOADER.responseType = "json";
 
-		Main_Container.jsonLoader.open("GET", "level1.json", true);
-		Main_Container.jsonLoader.onreadystatechange = () => {
+		Main_Container.JSON_LOADER.open("GET", "level1.json", true);
+		Main_Container.JSON_LOADER.onreadystatechange = () => {
 			this.pictureLoaderChecking++;
 			console.log(this.pictureLoaderChecking)
-			if (this.pictureLoaderChecking == 3) {
+			if (this.pictureLoaderChecking == 3) {																//FIXME
 				this.initialStartMenu("START");
 			}
 		};
-		Main_Container.jsonLoader.send();
+		Main_Container.JSON_LOADER.send();
 	}
 
 	private initialStartMenu(buttonName:string):void {
@@ -75,7 +77,7 @@ export default class Main_Container extends Container {
 	}
 
 	private startProject():void {
-		this._level = Main_Container.jsonLoader.response;
+		this._level = Main_Container.JSON_LOADER.response;
 		this.removeChild(this._startMenuContainer);
 		this.startAll();
 	}
@@ -100,11 +102,13 @@ export default class Main_Container extends Container {
 	}
 
 	private removeProject():void {
+		this._frameIterator = 0;
+		this._scoreIterator = 0;
+		this._score = 0;
+
 		this.removeChild(this._player);
 		this.removeChild(this._enemyContainer);
 		this._enemyArray = [];
-		this.removeChild(this._background);
-		this._background = null;
 		this.removeChild(this._scoreMenu);
 		this._scoreMenu = null;
 
@@ -121,7 +125,7 @@ export default class Main_Container extends Container {
 	}
 
 	private initialBackground():void {
-		this._background = Sprite.from("backgroundImg");
+		this._background = new Background(Main_Container.WINDOW_WIDTH, Main_Container.WINDOW_HEIGHT);
 		this.addChild(this._background);
 	}
 
@@ -149,6 +153,8 @@ export default class Main_Container extends Container {
 	}
 
 	private ticker():void {
+		this._background.y += .1
+
 		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false
 			&& this._player.x >= 0) {
 			this.leftMove(false);
