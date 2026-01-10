@@ -7,7 +7,6 @@ import Enemy from "./Enemy";
 import Key_Handler from "./Key_Handler";
 import Global from "./Global";
 import Collision_Checking from "./Collision_Checking";
-import NoiseFilter = PIXI.filters.NoiseFilter;
 import Background from "./Background";
 
 export default class Main_Container extends Container {
@@ -20,6 +19,7 @@ export default class Main_Container extends Container {
 	private _startMenu:Start_Menu;
 	private _button:Button;
 	private _background:Background;
+	private _displacementSprite:PIXI.Sprite;
 	private _scoreMenu:Score_Menu;
 	private _player:Player
 	private _frameIterator:number = 0;
@@ -40,7 +40,7 @@ export default class Main_Container extends Container {
 			.add("title", "title.jpg")
 			.add("player", "player.png")
 			.add("score-menu", "score-menu.png")
-			.add("backgroundImg", "bg.jpeg")
+			.add("displacement", "displacement.jpeg")
 
 		this.picLoader.load(()=> {
 			this.jsonLoader();
@@ -107,6 +107,7 @@ export default class Main_Container extends Container {
 		this._score = 0;
 
 		this.removeChild(this._player);
+		this.removeChild(this._displacementSprite);
 		this.removeChild(this._enemyContainer);
 		this._enemyArray = [];
 		this.removeChild(this._scoreMenu);
@@ -127,6 +128,13 @@ export default class Main_Container extends Container {
 	private initialBackground():void {
 		this._background = new Background(Main_Container.WINDOW_WIDTH, Main_Container.WINDOW_HEIGHT);
 		this.addChild(this._background);
+
+		this._displacementSprite = PIXI.Sprite.from("displacement.jpg");
+		let displacementFilter = new PIXI.filters.DisplacementFilter(this._displacementSprite);
+		this._displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+		this.addChild(this._displacementSprite);
+
+		this._background.filters = [displacementFilter];
 	}
 
 	private initialScoreMenu():void {
@@ -153,8 +161,6 @@ export default class Main_Container extends Container {
 	}
 
 	private ticker():void {
-		this._background.y += .1
-
 		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false
 			&& this._player.x >= 0) {
 			this.leftMove(false);
@@ -227,6 +233,8 @@ export default class Main_Container extends Container {
 			this.removeChild(this._scoreMenu);
 			this.initialScoreMenu();
 		}
+
+		this._displacementSprite.y += 3;
 	}
 
 	private leftMove(diag:boolean):void{
