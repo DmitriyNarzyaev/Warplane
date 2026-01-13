@@ -18,8 +18,8 @@ export default class Enemy extends Container {
         this._enemy.x = 0;
         this._enemy.y = 0;
         this._anchorContainer.addChild(this._enemy);
-        this._anchorContainer.x = this._enemy.width/2;
-        this._anchorContainer.y = this._enemy.height/2;
+        this._anchorContainer.x = this._enemy.width/4;
+        this._anchorContainer.y = this._enemy.height/4;
 
         let hitbox:PIXI.Graphics = new PIXI.Graphics;
         hitbox.beginFill(0xff0000, .2)
