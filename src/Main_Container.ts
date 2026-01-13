@@ -28,6 +28,7 @@ export default class Main_Container extends Container {
 	private _score:number = 0;
 	private pictureLoaderChecking:number = 0;
 	private picLoader:PIXI.Loader
+    private _objectSizeDecreaser:number = 1.5;
 
 	constructor() {
 		super();
@@ -146,6 +147,8 @@ export default class Main_Container extends Container {
 
     private initialPlayer():void {
         this._player = new Player();
+        this._player.width /= this._objectSizeDecreaser;
+        this._player.height /= this._objectSizeDecreaser;
         this._player.x = (Main_Container.WINDOW_WIDTH - this._player.width)/2;
         this._player.y = Main_Container.WINDOW_HEIGHT / 1.4;
         this.addChild(this._player);
@@ -153,6 +156,8 @@ export default class Main_Container extends Container {
 
 	private initialEnemy(mapX:number, mapY:number, MapWidth:number, mapHeight:number, appearanceX:number):void {
 		let enemy:Enemy = new Enemy(mapX, mapY, MapWidth, mapHeight);
+		enemy.width /= this._objectSizeDecreaser;
+		enemy.height /= this._objectSizeDecreaser;
 		enemy.x = appearanceX;
 		enemy.y -= enemy.height;
 		this._enemyContainer.addChild(enemy);
