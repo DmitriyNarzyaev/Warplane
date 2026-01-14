@@ -196,7 +196,6 @@ export default class Main_Container extends Container {
 			this.downMove(true);
 			this.rightMove(true);
 		}
-		Player._propeller.alpha = Math.random();
 
 		this._frameIterator ++;
 

@@ -22,7 +22,8 @@ export default class Enemy extends Container {
         this._anchorContainer.y = this._enemy.height/2;
 
         let hitbox:PIXI.Graphics = new PIXI.Graphics;
-        hitbox.beginFill(0xff0000, .2)
+        hitbox.beginFill(0xff0000, .0);
+        hitbox.lineStyle(2, 0x000000);
         hitbox.drawRect(-MapWidth/2, -mapHeight/2, MapWidth, mapHeight);
         this._anchorContainer.addChild(hitbox);
     }
