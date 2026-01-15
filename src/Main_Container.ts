@@ -166,17 +166,13 @@ export default class Main_Container extends Container {
 	}
 
 	private ticker():void {
-		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false
-			&& this._player.x >= 0) {
+		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false) {
 			this.leftMove(false);
-		}else if (Key_Handler.BUTTON_UP == true && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false
-			&& this._player.y >= 0) {
+		}else if (Key_Handler.BUTTON_UP == true && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false) {
 			this.upMove(false);
-		}else if (Key_Handler.BUTTON_RIGHT == true && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false
-			&& this._player.x <= Main_Container.WINDOW_WIDTH - this._player.width) {
+		}else if (Key_Handler.BUTTON_RIGHT == true && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false) {
 			this.rightMove(false);
-		}else if (Key_Handler.BUTTON_DOWN == true && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false
-			&& this._player.y <= Main_Container.WINDOW_HEIGHT - this._player.height) {
+		}else if (Key_Handler.BUTTON_DOWN == true && Key_Handler.BUTTON_LEFT == false && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false) {
 			this.downMove(false);
 		}
 
@@ -242,36 +238,44 @@ export default class Main_Container extends Container {
 	}
 
 	private leftMove(diag:boolean):void{
-		if (diag) {
-			this._player.x -= this._player._playerSpeed / Math.sqrt(2);
-		} else {
-			this._player.x -= this._player._playerSpeed;
+		if (this._player.x >= 0) {
+			if (diag) {
+				this._player.x -= this._player._playerSpeed / Math.sqrt(2);
+			} else {
+				this._player.x -= this._player._playerSpeed;
+			}
+			Player.leftMove();
 		}
-		Player.leftMove();
 	}
 
 	private upMove(diag:boolean):void{
-		if (diag) {
-			this._player.y -= this._player._playerSpeed / Math.sqrt(2);
-		} else {
-			this._player.y -= this._player._playerSpeed;
+		if (this._player.y >= 0) {
+			if (diag) {
+				this._player.y -= this._player._playerSpeed / Math.sqrt(2);
+			} else {
+				this._player.y -= this._player._playerSpeed;
+			}
 		}
 	}
 
 	private rightMove(diag:boolean):void{
-		if (diag) {
-			this._player.x += this._player._playerSpeed / Math.sqrt(2);
-		} else {
-			this._player.x += this._player._playerSpeed;
+		if (this._player.x <= Main_Container.WINDOW_WIDTH - this._player.width) {
+			if (diag) {
+				this._player.x += this._player._playerSpeed / Math.sqrt(2);
+			} else {
+				this._player.x += this._player._playerSpeed;
+			}
+			Player.rightMove();
 		}
-		Player.rightMove();
 	}
 
 	private downMove(diag:boolean):void{
-		if (diag) {
-			this._player.y += this._player._playerSpeed / Math.sqrt(2);
-		} else {
-			this._player.y += this._player._playerSpeed;
+		if (this._player.y <= Main_Container.WINDOW_HEIGHT - this._player.height) {
+			if (diag) {
+				this._player.y += this._player._playerSpeed / Math.sqrt(2);
+			} else {
+				this._player.y += this._player._playerSpeed;
+			}
 		}
 	}
 }
