@@ -154,8 +154,8 @@ export default class Main_Container extends Container {
         this.addChild(this._player);
     }
 
-	private initialEnemy(mapX:number, mapY:number, MapWidth:number, mapHeight:number, appearanceX:number):void {
-		let enemy:Enemy = new Enemy(mapX, mapY, MapWidth, mapHeight);
+	private initialEnemy(type:string, appearanceX:number):void {
+		let enemy:Enemy = new Enemy(type);
 		enemy.width /= this._objectSizeDecreaser;
 		enemy.height /= this._objectSizeDecreaser;
 		enemy.x = appearanceX;
@@ -198,10 +198,7 @@ export default class Main_Container extends Container {
 		this._level.items.forEach((enemy)=> {
 			if (this._frameIterator == enemy.time) {
 				this.initialEnemy(
-					enemy.mapX,
-					enemy.mapY,
-					enemy.mapWidth,
-					enemy.mapHeight,
+					enemy.type,
 					enemy.appearanceX,
 				);
 			}

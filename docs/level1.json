@@ -2,82 +2,46 @@
 	"items":[
 		{
 			"type":"rocket",
-			"mapX":221,
-			"mapY":251,
-			"mapWidth": 30,
-			"mapHeight": 62,
 			"time":60,
 			"speed":1.2,
 			"appearanceX": 960
 		}, {
 			"type":"rocket",
-			"mapX":221,
-			"mapY":251,
-			"mapWidth": 30,
-			"mapHeight": 62,
 			"time":70,
 			"speed":1.2,
 			"appearanceX": 900
 		}, {
 			"type":"rocket",
-			"mapX":221,
-			"mapY":251,
-			"mapWidth": 30,
-			"mapHeight": 62,
 			"time":80,
 			"speed":1.2,
 			"appearanceX": 1020
 		}, {
 			"type":"plane",
-			"mapX":0,
-			"mapY":251,
-			"mapWidth": 161,
-			"mapHeight": 200,
 			"time":120,
 			"speed":0.7,
 			"appearanceX": 831
 		}, {
 			"type":"plane",
-			"mapX":0,
-			"mapY":251,
-			"mapWidth": 161,
-			"mapHeight": 200,
 			"time":180,
 			"speed":0.7,
 			"appearanceX": 511
 		}, {
 			"type":"plane",
-			"mapX":0,
-			"mapY":251,
-			"mapWidth": 161,
-			"mapHeight": 200,
 			"time":240,
 			"speed":0.7,
 			"appearanceX": 1662
 		}, {
 			"type":"plane",
-			"mapX":0,
-			"mapY":251,
-			"mapWidth": 161,
-			"mapHeight": 200,
 			"time":360,
 			"speed":0.7,
 			"appearanceX": 511
 		}, {
 			"type":"plane",
-			"mapX":0,
-			"mapY":251,
-			"mapWidth": 161,
-			"mapHeight": 200,
 			"time":400,
 			"speed":0.7,
 			"appearanceX": 831
 		}, {
 			"type":"plane",
-			"mapX":0,
-			"mapY":251,
-			"mapWidth": 161,
-			"mapHeight": 200,
 			"time":440,
 			"speed":0.7,
 			"appearanceX": 1662
