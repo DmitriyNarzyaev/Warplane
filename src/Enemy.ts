@@ -3,7 +3,8 @@ import Container = PIXI.Container;
 export default class Enemy extends Container {
     public _anchorContainer:PIXI.Container;
     public directionOfFlight:number = -.25 + (Math.random()/2);
-    private _enemy: PIXI.Sprite;
+    public rocketFlame:PIXI.Sprite;
+    private _enemy:PIXI.Sprite;
     private _mapX:number;
     private _mapY:number;
     private _mapWidth:number;
@@ -16,7 +17,7 @@ export default class Enemy extends Container {
         this.addChild(this._anchorContainer);
 
         this.initialMapCoordinates(type);
-        this.initialEnemyTexture();
+        this.initialEnemyTexture(type);
     }
 
     private initialMapCoordinates(type:string):void {
@@ -33,7 +34,7 @@ export default class Enemy extends Container {
         }
     }
 
-    private initialEnemyTexture():void {
+    private initialEnemyTexture(type:string):void {
         let enemyTexture = new PIXI.Texture(PIXI.utils.TextureCache["player"]);
         enemyTexture.frame = new PIXI.Rectangle(this._mapX, this._mapY, this._mapWidth, this._mapHeight);
         this._enemy = new PIXI.Sprite(enemyTexture);
@@ -49,5 +50,18 @@ export default class Enemy extends Container {
         hitbox.lineStyle(2, 0x000000);
         hitbox.drawRect(-this._mapWidth/2, -this._mapHeight/2, this._mapWidth, this._mapHeight);
         this._anchorContainer.addChild(hitbox);
+
+        if (type == "rocket") {
+            this.initialRocketFlame();
+        }
+    }
+
+    private initialRocketFlame():void {
+        let flameTexture = new PIXI.Texture(PIXI.utils.TextureCache["player"]);
+        flameTexture.frame = new PIXI.Rectangle(177, 250, 29, 80);
+        this.rocketFlame = new PIXI.Sprite(flameTexture);
+        this.rocketFlame.x = -15;
+        this.rocketFlame.y = -110;
+        this._anchorContainer.addChild(this.rocketFlame);
     }
 }
