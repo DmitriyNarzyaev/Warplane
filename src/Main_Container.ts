@@ -20,6 +20,7 @@ export default class Main_Container extends Container {
 	private _button:Button;
 	private _background:Background;
 	private _displacementSprite:PIXI.Sprite;
+	private _displacementFilter:PIXI.filters.DisplacementFilter;
 	private _scoreMenu:Score_Menu;
 	private _player:Player
 	private _frameIterator:number = 0;
@@ -89,6 +90,7 @@ export default class Main_Container extends Container {
 		this.initialPlayer();
 		this._enemyContainer = new PIXI.Container;
 		this.addChild(this._enemyContainer);
+		this.initialFilters();
 
 		window.addEventListener("keydown",
 			(e:KeyboardEvent) => {
@@ -113,6 +115,7 @@ export default class Main_Container extends Container {
 		this._enemyArray = [];
 		this.removeChild(this._scoreMenu);
 		this._scoreMenu = null;
+		this.removeChild(this._displacementSprite);
 
 		window.removeEventListener("keydown",
 			(e:KeyboardEvent) => {
@@ -129,13 +132,13 @@ export default class Main_Container extends Container {
 	private initialBackground():void {
 		this._background = new Background(Main_Container.WINDOW_WIDTH, Main_Container.WINDOW_HEIGHT);
 		this.addChild(this._background);
+	}
 
+	private initialFilters():void {
 		this._displacementSprite = PIXI.Sprite.from("displacement.jpg");
-		let displacementFilter = new PIXI.filters.DisplacementFilter(this._displacementSprite);
+		this. _displacementFilter = new PIXI.filters.DisplacementFilter(this._displacementSprite);
 		this._displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
 		this.addChild(this._displacementSprite);
-
-		this._background.filters = [displacementFilter];
 	}
 
 	private initialScoreMenu():void {
@@ -163,6 +166,10 @@ export default class Main_Container extends Container {
 		this._enemyContainer.addChild(enemy);
 		this._enemyArray.push(enemy);
 		console.log("000")
+
+		if (type == "rocket") {
+			enemy.rocketFlame.filters = [this._displacementFilter];
+		}
 	}
 
 	private ticker():void {
@@ -231,7 +238,7 @@ export default class Main_Container extends Container {
 			this.initialScoreMenu();
 		}
 
-		this._displacementSprite.y += 3;
+		this._displacementSprite.height += Math.sin(this._frameIterator/100);
 	}
 
 	private leftMove(diag:boolean):void{

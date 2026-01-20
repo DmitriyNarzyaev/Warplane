@@ -60,7 +60,7 @@ export default class Enemy extends Container {
         let flameTexture = new PIXI.Texture(PIXI.utils.TextureCache["player"]);
         flameTexture.frame = new PIXI.Rectangle(177, 250, 29, 80);
         this.rocketFlame = new PIXI.Sprite(flameTexture);
-        this.rocketFlame.x = -15;
+        this.rocketFlame.x = -8;
         this.rocketFlame.y = -110;
         this._anchorContainer.addChild(this.rocketFlame);
     }
