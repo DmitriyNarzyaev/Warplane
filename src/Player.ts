@@ -27,7 +27,7 @@ export default class Player extends Container {
 
         let hitbox:PIXI.Graphics = new PIXI.Graphics;
         hitbox.beginFill(0xff0000, 0);
-        hitbox.lineStyle(2, 0x000000);
+        //hitbox.lineStyle(2, 0x000000);
         hitbox.drawRect(-Player._player.width/2, -Player._player.height/2, Player._player.width, Player._player.height);
         this._playerContainer.addChild(hitbox);
     }
