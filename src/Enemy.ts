@@ -1,10 +1,11 @@
 import Container = PIXI.Container;
 
 export default class Enemy extends Container {
-    public _anchorContainer:PIXI.Container;
     public directionOfFlight:number = -.25 + (Math.random()/2);
     public rocketFlame:PIXI.Sprite;
     public enemyType:string;
+    public hitboxArray:PIXI.Graphics[] = [];
+    private readonly _anchorContainer:PIXI.Container;
     private _enemy:PIXI.Sprite;
     private _mapX:number;
     private _mapY:number;
@@ -13,16 +14,13 @@ export default class Enemy extends Container {
 
     constructor(type:string) {
         super();
+        this.enemyType = type;
 
         this._anchorContainer = new PIXI.Container;
         this.addChild(this._anchorContainer);
 
         this.initialMapCoordinates(type);
         this.initialEnemyTexture(type);
-
-        if (type == "rocket") {
-            this.enemyType = "rocket"
-        }
     }
 
     private initialMapCoordinates(type:string):void {
@@ -50,14 +48,14 @@ export default class Enemy extends Container {
         this._anchorContainer.x = this._enemy.width/2;
         this._anchorContainer.y = this._enemy.height/2;
 
-        let hitbox:PIXI.Graphics = new PIXI.Graphics;
-        hitbox.beginFill(0xff0000, 0);
-        //hitbox.lineStyle(2, 0x000000);
-        hitbox.drawRect(-this._mapWidth/2, -this._mapHeight/2, this._mapWidth, this._mapHeight);
-        this._anchorContainer.addChild(hitbox);
-
         if (type == "rocket") {
+            this.initialHitbox(0, 0, this._mapWidth, this._mapHeight);
             this.initialRocketFlame();
+        }
+        if (type == "plane") {
+            this.initialHitbox(this._mapWidth/3, 0, this._mapWidth/3, this._mapHeight);
+            this.initialHitbox(0, this._mapHeight/5, this._mapWidth/3, this._mapHeight/3);
+            this.initialHitbox(this._mapWidth/1.5, this._mapHeight/5, this._mapWidth/3, this._mapHeight/3);
         }
     }
 
@@ -69,5 +67,13 @@ export default class Enemy extends Container {
         this.rocketFlame.x = -14;
         this.rocketFlame.y = -40;
         this._anchorContainer.addChild(this.rocketFlame);
+    }
+
+    private initialHitbox(hitX:number, hitY:number, hitWidth:number, hitHeight:number):void {
+        let hitbox:PIXI.Graphics = new PIXI.Graphics;
+        hitbox.beginFill(0xff0000, 0);
+        hitbox.lineStyle(2, 0x000000);
+        hitbox.drawRect(hitX, hitY, hitWidth, hitHeight);
+        this.addChild(hitbox);
     }
 }

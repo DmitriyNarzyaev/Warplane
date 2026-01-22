@@ -55,7 +55,6 @@ export default class Main_Container extends Container {
 		Main_Container.JSON_LOADER.open("GET", "level1.json", true);
 		Main_Container.JSON_LOADER.onreadystatechange = () => {
 			this.pictureLoaderChecking++;
-			console.log(this.pictureLoaderChecking)
 			if (this.pictureLoaderChecking == 3) {																//FIXME
 				this.initialStartMenu("START");
 			}
@@ -161,14 +160,15 @@ export default class Main_Container extends Container {
 		enemy.y -= enemy.height;
 		this._enemyContainer.addChild(enemy);
 		this._enemyArray.push(enemy);
-		console.log("000")
 
 		// if (type == "rocket") {
 		// 	enemy.rocketFlame.filters = [this._displacementFilter];
 		// }
 	}
-
+	private _test:number = 0
 	private ticker():void {
+		this._frameIterator ++;
+
 		if (Key_Handler.BUTTON_LEFT == true && Key_Handler.BUTTON_UP == false && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false) {
 			this.leftMove(false);
 		}else if (Key_Handler.BUTTON_UP == true && Key_Handler.BUTTON_RIGHT == false && Key_Handler.BUTTON_DOWN == false && Key_Handler.BUTTON_LEFT == false) {
@@ -196,8 +196,6 @@ export default class Main_Container extends Container {
 			this.rightMove(true);
 		}
 
-		this._frameIterator ++;
-
 		this._level.items.forEach((enemy)=> {
 			if (this._frameIterator == enemy.time) {
 				this.initialEnemy(
@@ -215,7 +213,6 @@ export default class Main_Container extends Container {
 
 		this._enemyArray.forEach((enemy)=> {
 			if (enemy.enemyType == "rocket") {
-				//enemy.rocketFlame.height+=Math.sin(this._frameIterator*100);
 				enemy.rocketFlame.height += Math.sin(this._frameIterator)*10;
 			}
 
@@ -223,15 +220,22 @@ export default class Main_Container extends Container {
 				this._enemyContainer.removeChild(enemy);
 			}
 
-			if (
-				Collision_Checking.horizontal(this._player, enemy) &&
-				Collision_Checking.vertical(this._player, enemy)
-			){
-				this.removeProject();
-				this.initialStartMenu("RESTART");
-			}
-
-
+			// if (this._test == 0 &&
+			// 	Collision_Checking.horizontal(this._player.hitbox, enemy.hitbox) &&
+			// 	Collision_Checking.vertical(this._player.hitbox, enemy.hitbox)
+			// ){
+			// 	console.log("player hitbox x = " + this._player.hitbox.x)
+			// 	console.log("player hitbox y = " + this._player.hitbox.y)
+			// 	console.log("enemy hitbox x = " + enemy.hitbox.x)
+			// 	console.log("enemy hitbox y = " + enemy.hitbox.y)
+			// 	console.log("player hitbox width = " + this._player.hitbox.width)
+			// 	console.log("player hitbox height = " + this._player.hitbox.height)
+			// 	console.log("enemy hitbox width = " + enemy.hitbox.width)
+			// 	console.log("enemy hitbox height = " + enemy.hitbox.height)
+			// 	this._test = 1;
+			// 	// this.removeProject();
+			// 	// this.initialStartMenu("RESTART");
+			// }
 		});
 
 		if (this._frameIterator % 60 === 0) {
@@ -244,9 +248,9 @@ export default class Main_Container extends Container {
 	private leftMove(diag:boolean):void{
 		if (this._player.x >= 0) {
 			if (diag) {
-				this._player.x -= this._player._playerSpeed / Math.sqrt(2);
+				this._player.x -= this._player.playerSpeed / Math.sqrt(2);
 			} else {
-				this._player.x -= this._player._playerSpeed;
+				this._player.x -= this._player.playerSpeed;
 			}
 			Player.leftMove();
 		}
@@ -255,9 +259,9 @@ export default class Main_Container extends Container {
 	private upMove(diag:boolean):void{
 		if (this._player.y >= 0) {
 			if (diag) {
-				this._player.y -= this._player._playerSpeed / Math.sqrt(2);
+				this._player.y -= this._player.playerSpeed / Math.sqrt(2);
 			} else {
-				this._player.y -= this._player._playerSpeed;
+				this._player.y -= this._player.playerSpeed;
 			}
 		}
 	}
@@ -265,9 +269,9 @@ export default class Main_Container extends Container {
 	private rightMove(diag:boolean):void{
 		if (this._player.x <= Main_Container.WINDOW_WIDTH - this._player.width) {
 			if (diag) {
-				this._player.x += this._player._playerSpeed / Math.sqrt(2);
+				this._player.x += this._player.playerSpeed / Math.sqrt(2);
 			} else {
-				this._player.x += this._player._playerSpeed;
+				this._player.x += this._player.playerSpeed;
 			}
 			Player.rightMove();
 		}
@@ -276,9 +280,9 @@ export default class Main_Container extends Container {
 	private downMove(diag:boolean):void{
 		if (this._player.y <= Main_Container.WINDOW_HEIGHT - this._player.height) {
 			if (diag) {
-				this._player.y += this._player._playerSpeed / Math.sqrt(2);
+				this._player.y += this._player.playerSpeed / Math.sqrt(2);
 			} else {
-				this._player.y += this._player._playerSpeed;
+				this._player.y += this._player.playerSpeed;
 			}
 		}
 	}

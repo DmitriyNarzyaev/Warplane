@@ -1,16 +1,16 @@
 import Container = PIXI.Container;
 
 export default class Player extends Container {
-    public _playerContainer:PIXI.Container;
+    public playerContainer:PIXI.Container;
+    public playerSpeed:number = 5;
+    public hitboxArray:PIXI.Graphics[] = [];
     private static _player: PIXI.Sprite;
     private static _playerTexture:any;
-    public _playerSpeed:number = 5;
 
     constructor() {
         super();
-
-        this._playerContainer = new PIXI.Container;
-        this.addChild(this._playerContainer);
+        this.playerContainer = new PIXI.Container;
+        this.addChild(this.playerContainer);
         this.initialPlayer();
     }
 
@@ -21,15 +21,22 @@ export default class Player extends Container {
         Player._player.anchor.set(0.5);
         Player._player.x = 0;
         Player._player.y = 0;
-        this._playerContainer.addChild(Player._player);
-        this._playerContainer.x = Player._player.width/2;
-        this._playerContainer.y = Player._player.height/2;
+        this.playerContainer.addChild(Player._player);
+        this.playerContainer.x = Player._player.width/2;
+        this.playerContainer.y = Player._player.height/2;
 
+        this.initialHitbox(Player._player.width/3, 0, Player._player.width/3, Player._player.height);
+        this.initialHitbox(0, Player._player.height/1.8, Player._player.width/3, Player._player.height/4);
+        this.initialHitbox(Player._player.width/1.5, Player._player.height/1.8, Player._player.width/3, Player._player.height/4);
+    }
+
+    private initialHitbox(hitX:number, hitY:number, hitWidth:number, hitHeight:number):void {
         let hitbox:PIXI.Graphics = new PIXI.Graphics;
         hitbox.beginFill(0xff0000, 0);
-        //hitbox.lineStyle(2, 0x000000);
-        hitbox.drawRect(-Player._player.width/2, -Player._player.height/2, Player._player.width, Player._player.height);
-        this._playerContainer.addChild(hitbox);
+        hitbox.lineStyle(2, 0x000000);
+        hitbox.drawRect(hitX, hitY, hitWidth, hitHeight);
+        this.addChild(hitbox);
+        this.hitboxArray.push(hitbox);
     }
 
     public static straightMove():void {
